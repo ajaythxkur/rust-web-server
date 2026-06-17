@@ -1,0 +1,12 @@
+[package]
+name = "rust-web-server"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+actix-web = "4.13.0"
+chrono = "0.4.45"
+dotenvy = "0.15.7"
+futures-util = "0.3.32"
+mongodb = "3.7.0"
+serde = { version = "1.0.228", features = ["derive"] }

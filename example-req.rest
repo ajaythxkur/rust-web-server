@@ -1,0 +1,37 @@
+@host=http://localhost:8585
+
+@contentType=application/json
+
+###
+POST {{host}}/owner
+Content-Type: {{contentType}}
+
+{
+    "name": "ajay",
+    "phone": "+91 9999999999",
+    "address": "Mandi, H.P."
+}
+
+###
+POST {{host}}/dog
+Content-Type: {{contentType}}
+
+{
+    "owner": "6a3252208fe8256018257c75"
+}
+
+###
+POST {{host}}/bookings
+Content-Type: {{contentType}}
+
+{
+    "owner": "6a3252208fe8256018257c75",
+    "start_time": "2026-06-17T13:00:00.000Z",
+    "duration_in_minutes": 10
+}
+
+###
+PUT {{host}}/booking/6a3252f18fe8256018257c78/cancel
+
+###
+GET {{host}}/bookings
