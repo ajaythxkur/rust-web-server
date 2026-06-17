@@ -8,7 +8,7 @@ pub struct Owner {
     pub name: String,
     pub email: Option<String>,
     pub phone: String,
-    pub address: String
+    pub address: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -16,7 +16,7 @@ pub struct OwnerRequest {
     pub name: String,
     pub email: Option<String>,
     pub phone: String,
-    pub address: String
+    pub address: String,
 }
 
 impl TryFrom<OwnerRequest> for Owner {
@@ -27,7 +27,7 @@ impl TryFrom<OwnerRequest> for Owner {
             name: item.name,
             email: item.email,
             phone: item.phone,
-            address: item.address
+            address: item.address,
         })
     }
 }

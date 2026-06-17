@@ -1,6 +1,13 @@
 use actix_web::{App, HttpResponse, HttpServer, Responder, get, web::Data};
 
-use crate::{routes::{booking_route::{cancel_booking, create_booking, get_bookings}, dog_route::create_dog, owner_route::create_owner}, services::db::Database};
+use crate::{
+    routes::{
+        booking_route::{cancel_booking, create_booking, get_bookings},
+        dog_route::create_dog,
+        owner_route::create_owner,
+    },
+    services::db::Database,
+};
 
 mod models;
 mod routes;
@@ -17,7 +24,7 @@ async fn main() -> std::io::Result<()> {
     let db = Database::init().await;
     let db_data = Data::new(db);
 
-    HttpServer::new(move || { 
+    HttpServer::new(move || {
         App::new()
             .app_data(db_data.clone())
             .service(hello)

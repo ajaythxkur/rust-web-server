@@ -8,7 +8,7 @@ pub struct Dog {
     pub owner: ObjectId,
     pub name: Option<String>,
     pub age: Option<String>,
-    pub breed: Option<String>
+    pub breed: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -16,7 +16,7 @@ pub struct DogRequest {
     pub owner: String,
     pub name: Option<String>,
     pub age: Option<String>,
-    pub breed: Option<String>
+    pub breed: Option<String>,
 }
 
 impl TryFrom<DogRequest> for Dog {
@@ -28,7 +28,7 @@ impl TryFrom<DogRequest> for Dog {
             owner: ObjectId::parse_str(&item.owner).expect("Failed to parse owner"),
             name: item.name,
             age: item.age,
-            breed: item.breed
+            breed: item.breed,
         })
     }
 }

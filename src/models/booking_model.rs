@@ -1,8 +1,8 @@
+use super::{dog_model::Dog, owner_model::Owner};
 use chrono::Utc;
 use mongodb::bson::{DateTime, oid::ObjectId};
 use serde::{Deserialize, Serialize};
 use std::{convert::TryFrom, time::SystemTime};
-use super::{dog_model::Dog, owner_model::Owner};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Booking {
@@ -10,14 +10,14 @@ pub struct Booking {
     pub owner: ObjectId,
     pub start_time: DateTime,
     pub duration_in_minutes: u8,
-    pub cancelled: bool
+    pub cancelled: bool,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct BookingRequest {
     pub owner: String,
     pub start_time: String,
-    pub duration_in_minutes: u8
+    pub duration_in_minutes: u8,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -27,7 +27,7 @@ pub struct FullBooking {
     pub dogs: Vec<Dog>,
     pub start_time: DateTime,
     pub duration_in_minutes: u8,
-    pub cancelled: bool
+    pub cancelled: bool,
 }
 
 impl TryFrom<BookingRequest> for Booking {
@@ -43,7 +43,7 @@ impl TryFrom<BookingRequest> for Booking {
             owner: ObjectId::parse_str(&item.owner).expect("Failed to parse owner"),
             start_time: DateTime::from(chrono_datetime),
             duration_in_minutes: item.duration_in_minutes,
-            cancelled: false
+            cancelled: false,
         })
     }
 }

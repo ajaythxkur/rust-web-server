@@ -1,6 +1,12 @@
-use actix_web::{post, HttpResponse, web::{Data, Json}};
+use actix_web::{
+    HttpResponse, post,
+    web::{Data, Json},
+};
 
-use crate::{models::dog_model::{Dog, DogRequest}, services::db::Database};
+use crate::{
+    models::dog_model::{Dog, DogRequest},
+    services::db::Database,
+};
 
 #[post("/dog")]
 pub async fn create_dog(db: Data<Database>, request: Json<DogRequest>) -> HttpResponse {
@@ -10,13 +16,13 @@ pub async fn create_dog(db: Data<Database>, request: Json<DogRequest>) -> HttpRe
                 owner: request.owner.clone(),
                 name: request.name.clone(),
                 age: request.age.clone(),
-                breed: request.breed.clone()
+                breed: request.breed.clone(),
             })
-            .expect("Error converting DogRequest to Dog")
+            .expect("Error converting DogRequest to Dog"),
         )
         .await
     {
         Ok(booking) => HttpResponse::Ok().json(booking),
-        Err(err) => HttpResponse::InternalServerError().body(err.to_string())
+        Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
 }

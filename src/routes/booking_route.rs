@@ -1,6 +1,12 @@
-use actix_web::{HttpResponse, get, post, put, web::{Data, Json, Path}};
+use actix_web::{
+    HttpResponse, get, post, put,
+    web::{Data, Json, Path},
+};
 
-use crate::{models::booking_model::{Booking, BookingRequest}, services::db::Database};
+use crate::{
+    models::booking_model::{Booking, BookingRequest},
+    services::db::Database,
+};
 
 #[post("/bookings")]
 pub async fn create_booking(db: Data<Database>, request: Json<BookingRequest>) -> HttpResponse {
@@ -9,14 +15,14 @@ pub async fn create_booking(db: Data<Database>, request: Json<BookingRequest>) -
             Booking::try_from(BookingRequest {
                 owner: request.owner.clone(),
                 start_time: request.start_time.clone(),
-                duration_in_minutes: request.duration_in_minutes
+                duration_in_minutes: request.duration_in_minutes,
             })
-            .expect("Error converting BookingRequest to Booking")
+            .expect("Error converting BookingRequest to Booking"),
         )
         .await
     {
         Ok(booking) => HttpResponse::Ok().json(booking),
-        Err(err) => HttpResponse::InternalServerError().body(err.to_string()) 
+        Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
 }
 
@@ -24,16 +30,16 @@ pub async fn create_booking(db: Data<Database>, request: Json<BookingRequest>) -
 pub async fn get_bookings(db: Data<Database>) -> HttpResponse {
     match db.get_bookings().await {
         Ok(bookings) => HttpResponse::Ok().json(bookings),
-        Err(err) => HttpResponse::InternalServerError().body(err.to_string())
+        Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
 }
 
 #[put("/booking/{id}/cancel")]
-pub async fn cancel_booking(db: Data<Database>, path: Path<(String, )>) -> HttpResponse {
+pub async fn cancel_booking(db: Data<Database>, path: Path<(String,)>) -> HttpResponse {
     let id = path.into_inner().0;
 
     match db.cancel_booking(id.as_str()).await {
         Ok(result) => HttpResponse::Ok().json(result),
-        Err(err) => HttpResponse::InternalServerError().body(err.to_string())
+        Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
 }
